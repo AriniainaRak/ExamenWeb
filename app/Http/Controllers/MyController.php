@@ -57,14 +57,14 @@ class MyController extends Controller
     {
         $email = $request->input('email');
         $pass = $request->input('pass');
-        echo ('de aon ony');
+        // echo ('de aon ony');
         $admin = DB::table('administrateur')->where('email',$email)->where('mdp',$pass)->get();
         if($admin!=null){
             $liste = DB::table('article')->get();
             return view('pages.homeadmin', $liste);
         }
         else{
-            
+        return redirect()->back()->with('error', 'misy probleme');
         }
     }
 
