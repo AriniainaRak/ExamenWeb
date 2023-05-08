@@ -38,8 +38,7 @@ class MyController extends Controller
             return "Error in connecting to the database";
         }
     }
-
-
+    
     public function home(): View
     {
         $liste = DB::table('publications')->get();
@@ -82,7 +81,7 @@ class MyController extends Controller
         $article->articledescription = $request['articledescription'];
         $data = DB::table('article')->where('titre', $article->titre)->where('soustitre', $article->soustitre)->where('articledescription', $article->articledescription)->get();
         echo $article->titre;
-        // return view('pages.result',$data);
+        return view('pages.result',$data);
     }
 
     public function insertArticle(Request $request)
@@ -95,5 +94,16 @@ class MyController extends Controller
         ]);
         $article->save();
         return redirect()->back()->with('success', 'Data inserted successfully.');
+    }
+
+    public function update(Request $request){
+        $article = Article::create([
+            'titre' => $request['titre'],
+            'soustitre' => $request['soustitre'],
+            'articledescription' => $request['description'],
+            'articleimage' => $request['image'],
+        ]);
+        $article->update();
+        return redirect()->back()->with('success', 'Data update successfully.');
     }
 }
